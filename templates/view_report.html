@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        AutoTech | {{ filename }}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <div>
+
+                <h2>AutoTech</h2>
+
+                <span>
+                    IT Support Platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">
+                MAIN MENU
+            </p>
+
+            <a href="/" class="nav-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/system-info" class="nav-link">
+                <span>▣</span> System Information
+            </a>
+
+            <a href="/network" class="nav-link">
+                <span>⌁</span> Network Diagnostics
+            </a>
+
+            <a href="/disk-health" class="nav-link">
+                <span>▤</span> Disk Health
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>♻</span> Cleanup
+            </a>
+
+            <a href="/reports" class="nav-link active">
+                <span>▧</span> Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="status-dot"></div>
+
+            <span>
+                Automation Engine
+            </span>
+
+            <strong>
+                Ready
+            </strong>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="breadcrumb">
+                    Workspace / Reports / Viewer
+                </p>
+
+                <h1>
+                    Report Viewer
+                </h1>
+
+            </div>
+
+        </header>
+
+
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    {{ filename }}
+                </h2>
+
+                <p>
+                    AutoTech diagnostic report
+                </p>
+
+            </div>
+
+            <div class="welcome-badge">
+                REPORT
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="activity-card"
+                 style="padding: 25px;">
+
+                <pre
+                    style="
+                        white-space: pre-wrap;
+                        font-family: Consolas, monospace;
+                        line-height: 1.7;
+                        margin: 0;
+                    ">{{ report_content }}</pre>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <a href="/reports"
+               class="action-link">
+
+                ← Back to Reports
+
+            </a>
+
+        </section>
+
+
+        <footer class="footer">
+
+            <p>
+                © 2026 AutoTech |
+                IT Support Automation Toolkit
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

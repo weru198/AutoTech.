@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>System Cleanup - AutoTech</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="report-container">
+
+        <div class="report-header">
+
+            <div>
+
+                <h1>System Cleanup</h1>
+
+                <div class="report-name">
+                    Temporary File Analysis
+                </div>
+
+            </div>
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="back-button">
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="overview-grid">
+
+            <div class="stat-card">
+
+                <h3>Temporary Files</h3>
+
+                <p>
+                    {{ file_count }}
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Potential Space</h3>
+
+                <p>
+                    {{ total_size }}
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Temp Location</h3>
+
+                <p style="font-size: 14px;">
+                    {{ temp_folder }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-section">
+
+            <h2>Cleanup Preview</h2>
+
+            <p>
+                AutoTech has scanned the Windows temporary directory.
+                No files have been deleted.
+            </p>
+
+        </div>
+
+
+        <div class="report-section">
+
+           
+<h2>Files Found</h2>
+
+<form method="POST" action="{{ url_for('cleanup') }}">
+
+    {% if files %}
+
+        <p>
+            Select individual temporary files to clean.
+            Review the paths before proceeding.
+        </p>
+
+        <div class="report-content">
+
+            {% for file in files[:100] %}
+
+                <label style="display:block; margin-bottom:12px;">
+
+                    <input
+                        type="checkbox"
+                        name="selected_files"
+                        value="{{ file.path }}"
+                    >
+
+                    {{ file.name }}
+                    — {{ format_size(file.size) }}
+
+                </label>
+
+            {% endfor %}
+
+        </div>
+
+           <p>
+            Only the first 100 files are displayed.
+            No files are selected automatically.
+           </p>
+
+           <label style="display:block; margin:18px 0;">
+
+            <input
+                type="checkbox"
+                name="confirm_cleanup"
+                value="yes"
+                required
+            >
+
+            I have reviewed my selected files and confirm cleanup.
+
+            </label>
+
+           <button type="submit">
+            Clean Selected Files
+           </button>
+
+           {% else %}
+
+            <p>No temporary files were found.</p>
+
+             {% endif %}
+
+ </form>
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

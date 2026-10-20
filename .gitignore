@@ -1,0 +1,39 @@
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+temp/
+tmp/
+
+# Generated diagnostic reports (may contain system details)
+reports/
+autotech/reports/
+
+# Test and coverage files
+.pytest_cache/
+.coverage
+htmlcov/

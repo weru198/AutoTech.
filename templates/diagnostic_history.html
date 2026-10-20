@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diagnostic History | AutoTech</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+        .history-container {
+            padding: 30px;
+        }
+
+        .history-table-wrapper {
+            overflow-x: auto;
+            margin-top: 24px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .history-table th {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .healthy {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .unknown {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .history-heading {
+            margin-bottom: 8px;
+        }
+
+        .history-note {
+            color: #64748b;
+        }
+
+        .history-actions {
+            margin-top: 20px;
+        }
+
+        .history-actions a {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #0891b2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="history-container">
+
+        <h1 class="history-heading">Diagnostic History</h1>
+       
+      <div style="
+       background: white;
+       padding: 24px;
+       border-radius: 12px;
+       margin: 24px 0;
+      ">
+      <h2>Disk Usage Trend</h2>
+
+       <p class="history-note">
+        Disk usage recorded in your saved troubleshooting reports.
+      </p>
+
+      <div style="height: 300px; position: relative;">
+        <canvas id="diskUsageChart"></canvas>
+      </div>
+
+       <p id="chartMessage" class="history-note"></p>
+      </div>
+
+        <p class="history-note">
+            Review previous troubleshooting reports and compare
+            recorded disk and network results.
+        </p>
+
+        <div class="history-actions">
+            <a href="{{ url_for('dashboard') }}">← Dashboard</a>
+            <a href="{{ url_for('reports') }}">All Reports</a>
+        </div>
+
+        {% if history %}
+
+            <p>
+                <strong>{{ history|length }}</strong>
+                full troubleshooting report(s) found.
+            </p>
+
+            <div class="history-table-wrapper">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Generated</th>
+                            <th>Report</th>
+                            <th>Disk Usage</th>
+                            <th>Disk Status</th>
+                            <th>Internet</th>
+                            <th>DNS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in history %}
+                            <tr>
+                                <td>{{ item.generated }}</td>
+
+                                <td>
+                                    <a href="{{ url_for(
+                                        'view_report',
+                                        filename=item.filename
+                                    ) }}">
+                                        {{ item.filename }}
+                                    </a>
+                                </td>
+
+                                <td>{{ item.disk_usage }}</td>
+
+                                <td>
+                                    {% set status = item.disk_status|lower %}
+
+                                    <span class="status {{ status
+                                        if status in ['healthy', 'warning', 'critical']
+                                        else 'unknown' }}">
+                                        {{ item.disk_status }}
+                                    </span>
+                                </td>
+
+                                <td>{{ item.internet }}</td>
+                                <td>{{ item.dns }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+
+            <p>
+                No full troubleshooting reports were found yet.
+                Generate a Full Troubleshooting Report and refresh this page.
+            </p>
+
+        {% endif %}
+
+    </main>
+    
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const historyData = {{ history | tojson }};
+
+    const validRecords = historyData
+        .filter(item =>
+            item.disk_usage &&
+            /^[0-9]+(?:\.[0-9]+)?%$/.test(item.disk_usage)
+        )
+        .slice()
+        .reverse();
+
+    const labels = validRecords.map(item => item.generated);
+    const values = validRecords.map(item =>
+        parseFloat(item.disk_usage)
+    );
+
+    const message = document.getElementById("chartMessage");
+
+    if (values.length === 0) {
+        message.textContent =
+            "No valid disk usage measurements are available yet.";
+    } else if (values.length === 1) {
+        message.textContent =
+            "One measurement is available. Generate more reports to see a trend.";
+    }
+
+    new Chart(document.getElementById("diskUsageChart"), {
+        type: "line",
+
+        data: {
+            labels: labels,
+
+            datasets: [{
+                label: "Disk Usage (%)",
+                data: values,
+                borderColor: "#0891b2",
+                backgroundColor: "rgba(8, 145, 178, 0.12)",
+                fill: true,
+                tension: 0.25,
+                pointRadius: 4
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: "Disk Usage (%)"
+                    }
+                },
+
+                x: {
+                    title: {
+                        display: true,
+                        text: "Report Date"
+                    }
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
+
+</body>
+</html>

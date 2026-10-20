@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AutoTech | System Information</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <div>
+                <h2>AutoTech</h2>
+                <span>IT Support Platform</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">
+                MAIN MENU
+            </p>
+
+            <a href="/" class="nav-link">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="/system-info" class="nav-link active">
+                <span>▣</span>
+                System Information
+            </a>
+
+            <a href="/network" class="nav-link">
+                <span>⌁</span>
+                Network Diagnostics
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>▤</span>
+                Disk Health
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>♻</span>
+                Cleanup
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>▧</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="status-dot"></div>
+
+            <span>
+                Automation Engine
+            </span>
+
+            <strong>
+                Ready
+            </strong>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+
+                <p class="breadcrumb">
+                    Workspace / System Information
+                </p>
+
+                <h1>
+                    System Information
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    System Online
+
+                </span>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        AW
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <span>
+                            IT Support
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE INTRO -->
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    System Information
+                </h2>
+
+                <p>
+                    View detailed information about this computer,
+                    operating system, processor, and software environment.
+                </p>
+
+            </div>
+
+            <div class="welcome-badge">
+                SYSTEM INSPECTION
+            </div>
+
+        </section>
+
+
+        <!-- SYSTEM DETAILS -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Computer Details
+                    </h2>
+
+                    <p>
+                        Information detected from the local system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+
+                <!-- COMPUTER NAME -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon cyan">
+                            ▣
+                        </span>
+
+                        <span class="stat-label">
+                            COMPUTER
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ system_info.hostname }}
+                    </h3>
+
+                    <p class="stat-description">
+                        Computer Name
+                    </p>
+
+                </div>
+
+
+                <!-- OPERATING SYSTEM -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon blue">
+                            ▤
+                        </span>
+
+                        <span class="stat-label">
+                            OPERATING SYSTEM
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ system_info.os }}
+                    </h3>
+
+                    <p class="stat-description">
+                        {{ system_info.os_release }}
+                    </p>
+
+                </div>
+
+
+                <!-- ARCHITECTURE -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon purple">
+                            ◈
+                        </span>
+
+                        <span class="stat-label">
+                            ARCHITECTURE
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ system_info.architecture }}
+                    </h3>
+
+                    <p class="stat-description">
+                        System Architecture
+                    </p>
+
+                </div>
+
+
+                <!-- PYTHON -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon orange">
+                            ◉
+                        </span>
+
+                        <span class="stat-label">
+                            PYTHON
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ system_info.python_version }}
+                    </h3>
+
+                    <p class="stat-description">
+                        Python Version
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+<!-- MEMORY INFORMATION -->
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>Memory Information</h2>
+
+            <p>
+                Current RAM usage detected from the local system.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <!-- TOTAL RAM -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon cyan">
+                    ▣
+                </span>
+
+                <span class="stat-label">
+                    TOTAL RAM
+                </span>
+
+            </div>
+
+            <h3>
+                {{ memory.total }} GB
+            </h3>
+
+            <p class="stat-description">
+                Installed memory
+            </p>
+
+        </div>
+
+
+        <!-- AVAILABLE RAM -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon blue">
+                    ◈
+                </span>
+
+                <span class="stat-label">
+                    AVAILABLE
+                </span>
+
+            </div>
+
+            <h3>
+                {{ memory.available }} GB
+            </h3>
+
+            <p class="stat-description">
+                Currently available
+            </p>
+
+        </div>
+
+
+        <!-- USED RAM -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon purple">
+                    ▤
+                </span>
+
+                <span class="stat-label">
+                    USED RAM
+                </span>
+
+            </div>
+
+            <h3>
+                {{ memory.used }} GB
+            </h3>
+
+            <p class="stat-description">
+                Currently in use
+            </p>
+
+        </div>
+
+
+        <!-- RAM USAGE -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon orange">
+                    ◉
+                </span>
+
+                <span class="stat-label">
+                    USAGE
+                </span>
+
+            </div>
+
+            <h3>
+                {{ memory.percent }}%
+            </h3>
+
+            <p class="stat-description">
+                Memory utilization
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+        
+       <!-- CPU INFORMATION -->
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>CPU Information</h2>
+
+            <p>
+                Processor details and current CPU utilization.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <!-- PROCESSOR -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon cyan">
+                    ⚙
+                </span>
+
+                <span class="stat-label">
+                    PROCESSOR
+                </span>
+
+            </div>
+
+            <h3>
+                {{ system_info.processor }}
+            </h3>
+
+            <p class="stat-description">
+                CPU model
+            </p>
+
+        </div>
+
+
+        <!-- PHYSICAL CORES -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon blue">
+                    ◈
+                </span>
+
+                <span class="stat-label">
+                    CORES
+                </span>
+
+            </div>
+
+            <h3>
+                {{ cpu_info.cores }}
+            </h3>
+
+            <p class="stat-description">
+                Physical CPU cores
+            </p>
+
+        </div>
+
+
+        <!-- LOGICAL PROCESSORS -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon purple">
+                    ▤
+                </span>
+
+                <span class="stat-label">
+                    THREADS
+                </span>
+
+            </div>
+
+            <h3>
+                {{ cpu_info.logical_processors }}
+            </h3>
+
+            <p class="stat-description">
+                Logical processors
+            </p>
+
+        </div>
+
+
+        <!-- CPU USAGE -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon orange">
+                    ◉
+                </span>
+
+                <span class="stat-label">
+                    CPU USAGE
+                </span>
+
+            </div>
+
+            <h3>
+                {{ cpu_info.usage_percent }}%
+            </h3>
+
+            <p class="stat-description">
+                Current CPU utilization
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+        
+        <!-- SYSTEM UPTIME -->
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>System Uptime</h2>
+
+            <p>
+                Time elapsed since the computer was last started.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon cyan">
+                    ◷
+                </span>
+
+                <span class="stat-label">
+                    UPTIME
+                </span>
+
+            </div>
+
+            <h3>
+                {{ uptime.days }}d {{ uptime.hours }}h
+            </h3>
+
+            <p class="stat-description">
+                {{ uptime.minutes }} minutes
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+        
+       
+        <!-- DETAILED INFORMATION -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Technical Details
+                    </h2>
+
+                    <p>
+                        Additional system information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity-card">
+
+
+                <div class="activity-item">
+
+                    <div class="activity-icon cyan">
+                        ▣
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            Processor
+                        </strong>
+
+                        <span>
+                            {{ system_info.processor }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity-item">
+
+                    <div class="activity-icon blue">
+                        ◈
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            Windows Version
+                        </strong>
+
+                        <span>
+                            {{ system_info.os_version }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity-item">
+
+                    <div class="activity-icon purple">
+                        ●
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            Current User
+                        </strong>
+
+                        <span>
+                            {{ system_info.username }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <p>
+                © 2026 AutoTech | IT Support Automation Toolkit
+            </p>
+
+            <p>
+                System information collected locally.
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

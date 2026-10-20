@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleanup Results - AutoTech</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="report-container">
+        <h1>Cleanup Results</h1>
+
+        <div class="report-section">
+            <h2>Summary</h2>
+            <p>Files removed: {{ results.deleted }}</p>
+            <p>Files skipped: {{ results.skipped }}</p>
+        </div>
+
+        {% if results.errors %}
+            <div class="report-section">
+                <h2>Files that could not be removed</h2>
+                <ul>
+                    {% for filename in results.errors %}
+                        <li>{{ filename }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <a class="back-button"
+           href="{{ url_for('cleanup') }}">
+            Back to Cleanup
+        </a>
+
+        <a class="back-button"
+           href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+    </div>
+</body>
+</html>

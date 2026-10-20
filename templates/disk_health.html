@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AutoTech | Disk Health</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="app-container">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <div>
+
+                <h2>
+                    AutoTech
+                </h2>
+
+                <span>
+                    IT Support Platform
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">
+                MAIN MENU
+            </p>
+
+
+            <a href="/" class="nav-link">
+
+                <span>▦</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="/system-info" class="nav-link">
+
+                <span>▣</span>
+
+                System Information
+
+            </a>
+
+
+            <a href="/network" class="nav-link">
+
+                <span>⌁</span>
+
+                Network Diagnostics
+
+            </a>
+
+
+            <a href="/disk-health" class="nav-link active">
+
+                <span>▤</span>
+
+                Disk Health
+
+            </a>
+
+
+            <a href="#" class="nav-link">
+
+                <span>♻</span>
+
+                Cleanup
+
+            </a>
+
+
+            <a href="#" class="nav-link">
+
+                <span>▧</span>
+
+                Reports
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="status-dot"></div>
+
+            <span>
+                Automation Engine
+            </span>
+
+            <strong>
+                Ready
+            </strong>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="breadcrumb">
+                    Workspace / Disk Health
+                </p>
+
+                <h1>
+                    Disk Health
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    System Online
+
+                </span>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        AW
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <span>
+                            IT Support
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    Disk Health & Storage
+                </h2>
+
+                <p>
+                    Monitor disk capacity, storage usage,
+                    and available space across connected drives.
+                </p>
+               
+
+                <a href="/run-disk-diagnostics" class="action-link">
+                     Run Disk Diagnostic →
+                </a>
+            </div>
+
+
+            <div class="welcome-badge">
+                STORAGE MONITOR
+            </div>
+
+        </section>
+
+
+
+        <!-- DRIVE OVERVIEW -->
+
+        <section class="section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Drive Overview
+                    </h2>
+
+                    <p>
+                        Current storage usage detected on this computer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stats-grid">
+
+
+                {% for disk in disks %}
+
+
+                <!-- DRIVE -->
+
+                <div class="stat-card">
+
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon purple">
+                            ▤
+                        </span>
+
+                        <span class="stat-label">
+                            DRIVE
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        {{ disk.mountpoint }}
+                    </h3>
+
+
+                    <p class="stat-description">
+                        {{ disk.filesystem }}
+                    </p>
+
+
+                    <div class="stat-footer">
+
+                        <span>
+                            {{ disk.used }} GB used
+                        </span>
+
+                        <span>
+                            {{ disk.free }} GB free
+                        </span>
+
+                    </div>
+
+
+                    <!-- STORAGE BAR -->
+
+                    <div class="storage-progress">
+
+                        <div
+                            class="storage-progress-bar"
+                            style="width: {{ disk.usage_percent }}%;">
+                        </div>
+
+                    </div>
+
+
+                    <p class="stat-description">
+
+                        {{ disk.usage_percent }}% used
+
+                    </p>
+
+
+                </div>
+
+
+                {% else %}
+
+
+                <div class="stat-card">
+
+                    <h3>
+                        No drives detected
+                    </h3>
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </section>
+
+        <!-- STORAGE HEALTH SUMMARY -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>Storage Health</h2>
+
+            <p>
+                Automated storage capacity assessment.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="activity-card">
+
+        {% for disk in disks %}
+
+        <div class="activity-item">
+
+            <div class="activity-icon purple">
+                ▤
+            </div>
+
+
+            <div class="activity-details">
+
+                <strong>
+                    {{ disk.mountpoint }}
+                </strong>
+
+                <span>
+
+                    {{ disk.free }} GB free of
+                    {{ disk.total }} GB
+
+                </span>
+
+            </div>
+
+
+            <span class="activity-status">
+
+                {% if disk.status == "Healthy" %}
+
+                    Healthy
+
+                {% elif disk.status == "Warning" %}
+
+                    Warning
+
+                {% else %}
+
+                    Critical
+
+                {% endif %}
+
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+        <!-- STORAGE DETAILS -->
+
+        <section class="section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Storage Details
+                    </h2>
+
+                    <p>
+                        Detailed information for each detected drive.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity-card">
+
+
+                {% for disk in disks %}
+
+
+                <div class="activity-item">
+
+
+                    <div class="activity-icon purple">
+                        ▤
+                    </div>
+
+
+                    <div class="activity-details">
+
+                        <strong>
+                            {{ disk.device }}
+                        </strong>
+
+
+                        <span>
+
+                            Total:
+                            {{ disk.total }} GB
+
+                            |
+
+                            Used:
+                            {{ disk.used }} GB
+
+                            |
+
+                            Free:
+                            {{ disk.free }} GB
+
+                        </span>
+
+                    </div>
+
+
+                    <span class="activity-status">
+
+                         {% if disk.status == "Healthy" %}
+
+                    <span class="mini-dot green"></span>
+                      Healthy
+
+                       {% elif disk.status == "Warning" %}
+
+                    <span class="mini-dot orange"></span>
+                      Warning
+
+                     {% else %}
+
+                     <span class="mini-dot red"></span>
+                      Critical
+
+                     {% endif %}
+
+                    </span>
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <p>
+                © 2026 AutoTech | IT Support Automation Toolkit
+            </p>
+
+            <p>
+                Storage information collected locally.
+            </p>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

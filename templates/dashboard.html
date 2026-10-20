@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AutoTech | IT Support Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">A</div>
+            <div>
+                <h2>AutoTech</h2>
+                <span>IT Support Platform</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">MAIN MENU</p>
+
+            <a href="/" class="nav-link active">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/system-info" class="nav-link">
+                <span>▣</span> System Information
+            </a>
+
+            <a href="/network" class="nav-link">
+                <span>⌁</span> Network Diagnostics
+            </a>
+
+            <a href="/disk-health" class="nav-link">
+                <span>▤</span> Disk Health
+            </a>
+
+            <a href="{{ url_for('cleanup') }}" class="nav-link">
+                <span>♻</span> Cleanup
+            </a>
+
+            <a href="{{ url_for('reports') }}" class="nav-link">
+                <span>▧</span> Reports
+            </a>
+            <a href="{{ url_for('cleanup') }}" class="sidebar-link">
+                    <span>🧹</span>
+                    <span>System Cleanup</span>
+            </a>
+
+            <a href="{{ url_for('diagnostic_history') }}" class="sidebar-link">
+                 <span>📊</span>
+                 <span>Diagnostic History</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="status-dot"></div>
+            <span>Automation Engine</span>
+            <strong>Ready</strong>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <p class="breadcrumb">Workspace / Dashboard</p>
+                <h1>Dashboard Overview</h1>
+            </div>
+
+            <div class="topbar-right">
+
+                <span class="system-status">
+                    <span class="status-dot"></span>
+                    System Online
+                </span>
+
+                <div class="profile">
+
+                    <div class="profile-avatar">AW</div>
+
+                    <div>
+                        <strong>Administrator</strong>
+                        <span>IT Support</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME SECTION -->
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>Welcome to AutoTech 👋</h2>
+
+                <p>
+                    Monitor your system, run diagnostics, and manage
+                    IT support operations from one place.
+                </p>
+
+            </div>
+
+            <div class="welcome-badge">
+                IT AUTOMATION TOOLKIT
+            </div>
+
+        </section>
+
+
+        <!-- SYSTEM OVERVIEW -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>System Overview</h2>
+
+                    <p>
+                        A quick look at your computer's health.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <!-- SYSTEM CARD -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon cyan">▣</span>
+
+                        <span class="stat-label">
+                            SYSTEM
+                        </span>
+
+                    </div>
+
+                    <h3>{{ system_info.os }}</h3>
+
+                    <p class="stat-description">
+                        Operating System
+                    </p>
+
+                    <div class="stat-footer">
+
+                        <span class="mini-dot green"></span>
+
+                        System detected
+
+                    </div>
+
+                </div>
+
+
+                <!-- NETWORK CARD -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon blue">⌁</span>
+
+                        <span class="stat-label">
+                            NETWORK
+                        </span>
+
+                    </div>
+
+                   <h3>{{ network_status }}</h3>
+
+                    <p class="stat-description">
+                        Connectivity status
+                    </p>
+
+                    <div class="stat-footer">
+
+                        <span class="mini-dot green"></span>
+
+                       Internet connectivity detected
+
+                    </div>
+
+                </div>
+
+
+                <!-- STORAGE CARD -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon purple">▤</span>
+
+                        <span class="stat-label">
+                            STORAGE
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ disk_info.total }} GB
+                    </h3>
+
+                    <p class="stat-description">
+                        Total disk capacity
+                    </p>
+
+
+                    <div class="stat-footer">
+
+                        <span>
+                            Used: {{ disk_info.used }} GB
+                        </span>
+
+                        <span>
+                            Free: {{ disk_info.free }} GB
+                        </span>
+
+                    </div>
+
+
+                    <!-- STORAGE PROGRESS -->
+                    <div class="storage-progress">
+
+                        <div
+                            class="storage-progress-bar"
+                            style="width: {{ disk_info.usage_percent }}%;">
+                        </div>
+
+                    </div>
+
+
+                    <p class="stat-description">
+
+                        {{ disk_info.usage_percent }}% used
+
+                    </p>
+
+                </div>
+
+
+                <!-- DIAGNOSTICS CARD -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon orange">▧</span>
+
+                        <span class="stat-label">
+                            DIAGNOSTICS
+                        </span>
+
+                    </div>
+
+                    <h3>5</h3>
+
+                    <p class="stat-description">
+                        Available diagnostic tools
+                    </p>
+
+                    <div class="stat-footer">
+
+                        <span class="mini-dot green"></span>
+
+                        Tools available
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Quick Actions</h2>
+
+                    <p>
+                        Access your diagnostic tools.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions-grid">
+
+
+                <!-- SYSTEM INFORMATION -->
+                <div class="action-card">
+
+                    <div class="action-icon cyan">
+                        ▣
+                    </div>
+
+                    <h3>
+                        System Information
+                    </h3>
+
+                    <p>
+                        View your computer specifications,
+                        operating system, and memory.
+                    </p>
+
+                    <a href="/system-information" class="action-link">
+                        Open Tool <span>→</span>
+                    </a>
+
+                </div>
+
+
+                <!-- NETWORK DIAGNOSTICS -->
+                <div class="action-card">
+
+                    <div class="action-icon blue">
+                        ⌁
+                    </div>
+
+                    <h3>
+                        Network Diagnostics
+                    </h3>
+
+                    <p>
+                        Test connectivity, check DNS,
+                        and inspect network configuration.
+                    </p>
+
+                    <a href="/network" class="action-link">
+                        Open Tool <span>→</span>
+                    </a>
+
+                </div>
+
+
+                <!-- DISK HEALTH -->
+                <div class="action-card">
+
+                    <div class="action-icon purple">
+                        ▤
+                    </div>
+
+                    <h3>
+                        Disk Health
+                    </h3>
+
+                    <p>
+                        Check disk capacity, available
+                        storage, and usage warnings.
+                    </p>
+
+                    <a href="/disk-health" class="action-link">
+                        Open Tool <span>→</span>
+                    </a>
+
+                </div>
+
+
+                <!-- CLEANUP -->
+                <div class="action-card">
+
+                    <div class="action-icon orange">
+                        ♻
+                    </div>
+
+                    <h3>
+                        Temporary File Cleanup
+                    </h3>
+
+                    <p>
+                        Preview temporary files and
+                        recover storage with confirmation.
+                    </p>
+
+                    <a href="/cleanup" class="action-link">
+                        Open Tool <span>→</span>
+                    </a>
+                   
+                </div>
+
+            </div>
+                <form
+                 action="{{ url_for('generate_full_report') }}"
+                 method="POST">
+
+                 <button type="submit" class="action-button">
+                 Generate Full Report
+                 </button>
+
+                </form>
+
+                <a href="{{ url_for('cleanup') }}" class="sidebar-link">
+                    <span>🧹</span>
+                    <span>System Cleanup</span>
+                </a>
+
+                <a href="{{ url_for('diagnostic_history') }}" class="sidebar-link">
+                 <span>📊</span>
+                 <span>Diagnostic History</span>
+                </a>
+        </section>
+
+
+        <!-- RECENT ACTIVITY -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Recent Activity</h2>
+
+                    <p>
+                        Keep track of your diagnostic operations.
+                    </p>
+
+                </div>
+
+                <a href="#" class="view-all">
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="activity-card">
+
+
+                <!-- SYSTEM INFORMATION -->
+                <div class="activity-item">
+
+                    <div class="activity-icon cyan">
+                        ▣
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            System Information
+                        </strong>
+
+                        <span>
+                            System information module available
+                        </span>
+
+                    </div>
+
+                    <span class="activity-status">
+                        Available
+                    </span>
+
+                </div>
+
+
+                <!-- NETWORK -->
+                <div class="activity-item">
+
+                    <div class="activity-icon blue">
+                        ⌁
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            Network Diagnostics
+                        </strong>
+
+                        <span>
+                            Network diagnostics module available
+                        </span>
+
+                    </div>
+
+                    <span class="activity-status">
+                        Available
+                    </span>
+
+                </div>
+
+
+                <!-- DISK -->
+                <div class="activity-item">
+
+                    <div class="activity-icon purple">
+                        ▤
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            Disk Health
+                        </strong>
+
+                        <span>
+                            Disk monitoring module available
+                        </span>
+
+                    </div>
+
+                    <span class="activity-status">
+                        Available
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <p>
+                © 2026 AutoTech | IT Support Automation Toolkit
+            </p>
+
+            <p>
+                Python {{ system_info.python_version }}
+                | Built for smarter IT support.
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

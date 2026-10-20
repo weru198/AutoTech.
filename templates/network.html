@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AutoTech | Network Diagnostics</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <div>
+                <h2>AutoTech</h2>
+                <span>IT Support Platform</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-label">
+                MAIN MENU
+            </p>
+
+            <a href="/" class="nav-link">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="/system-info" class="nav-link">
+                <span>▣</span>
+                System Information
+            </a>
+
+            <a href="/network" class="nav-link active">
+                <span>⌁</span>
+                Network Diagnostics
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>▤</span>
+                Disk Health
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>♻</span>
+                Cleanup
+            </a>
+
+            <a href="#" class="nav-link">
+                <span>▧</span>
+                Reports
+            </a>
+            
+           
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="status-dot"></div>
+
+            <span>
+                Automation Engine
+            </span>
+
+            <strong>
+                Ready
+            </strong>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+
+                <p class="breadcrumb">
+                    Workspace / Network Diagnostics
+                </p>
+
+                <h1>
+                    Network Diagnostics
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <span class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    System Online
+
+                </span>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        AW
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <span>
+                            IT Support
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- INTRO -->
+        <section class="welcome-section">
+
+            <div>
+
+                <h2>
+                    Network Diagnostics
+                </h2>
+
+                <p>
+                    Inspect network configuration and identify
+                    connectivity information from this computer.
+                </p>
+                <a href="/run-network-diagnostics" class="action-link">
+                Run Full Diagnostics →
+                </a>
+            </div>
+
+            <div class="welcome-badge">
+                NETWORK TOOLKIT
+            </div>
+
+        </section>
+
+
+        <!-- NETWORK OVERVIEW -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Network Overview
+                    </h2>
+
+                    <p>
+                        Current network information detected locally.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+
+                <!-- HOSTNAME -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon cyan">
+                            ▣
+                        </span>
+
+                        <span class="stat-label">
+                            HOSTNAME
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ hostname }}
+                    </h3>
+
+                    <p class="stat-description">
+                        Computer network name
+                    </p>
+
+                </div>
+
+
+                <!-- LOCAL IP -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon blue">
+                            ⌁
+                        </span>
+
+                        <span class="stat-label">
+                            LOCAL IP
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ local_ip }}
+                    </h3>
+
+                    <p class="stat-description">
+                        IPv4 address
+                    </p>
+
+                </div>
+
+
+                <!-- ADAPTER COUNT -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon purple">
+                            ◈
+                        </span>
+
+                        <span class="stat-label">
+                            ADAPTERS
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        {{ adapters|length }}
+                    </h3>
+
+                    <p class="stat-description">
+                        Network interfaces detected
+                    </p>
+
+                </div>
+
+
+                <!-- STATUS -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <span class="stat-icon orange">
+                            ◉
+                        </span>
+
+                        <span class="stat-label">
+                            STATUS
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        Detected
+                    </h3>
+
+                    <p class="stat-description">
+                        Network configuration available
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CONNECTIVITY INFORMATION -->
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>Connectivity Information</h2>
+
+            <p>
+                Gateway, DNS, and internet connectivity status.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <!-- GATEWAY -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon cyan">
+                    ◈
+                </span>
+
+                <span class="stat-label">
+                    GATEWAY
+                </span>
+
+            </div>
+
+            <h3>
+                {{ gateway }}
+            </h3>
+
+            <p class="stat-description">
+                Default gateway
+            </p>
+
+        </div>
+
+
+        <!-- DNS -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon blue">
+                    ▣
+                </span>
+
+                <span class="stat-label">
+                    DNS
+                </span>
+
+            </div>
+
+            <h3>
+                {{ dns_servers|length }}
+            </h3>
+
+            <p class="stat-description">
+                DNS servers detected
+            </p>
+
+        </div>
+
+
+        <!-- INTERNET -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon purple">
+                    ⌁
+                </span>
+
+                <span class="stat-label">
+                    INTERNET
+                </span>
+
+            </div>
+
+            <h3>
+                {{ internet_status }}
+            </h3>
+
+            <p class="stat-description">
+                External connectivity
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+        <!-- DNS SERVERS -->
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>DNS Servers</h2>
+
+            <p>
+                DNS servers detected on this computer.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="activity-card">
+
+        {% for dns in dns_servers %}
+
+        <div class="activity-item">
+
+            <div class="activity-icon blue">
+                ◈
+            </div>
+
+            <div class="activity-details">
+
+                <strong>
+                    DNS Server
+                </strong>
+
+                <span>
+                    {{ dns }}
+                </span>
+
+            </div>
+
+            <span class="activity-status">
+                Detected
+            </span>
+
+        </div>
+
+        {% else %}
+
+        <div class="activity-item">
+
+            <div class="activity-details">
+
+                <strong>
+                    No DNS servers detected
+                </strong>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+        
+        <!-- PING TEST -->
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <h2>Ping Test</h2>
+
+            <p>
+                Test reachability and response time to an external host.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <!-- TARGET -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon cyan">
+                    ⌁
+                </span>
+
+                <span class="stat-label">
+                    TARGET
+                </span>
+
+            </div>
+
+            <h3>
+                {{ ping_target }}
+            </h3>
+
+            <p class="stat-description">
+                Test destination
+            </p>
+
+        </div>
+
+
+        <!-- RESULT -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon blue">
+                    ◉
+                </span>
+
+                <span class="stat-label">
+                    RESULT
+                </span>
+
+            </div>
+
+            <h3>
+                {{ ping_status }}
+            </h3>
+
+            <p class="stat-description">
+                Ping result
+            </p>
+
+        </div>
+
+
+        <!-- LATENCY -->
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-icon purple">
+                    ◷
+                </span>
+
+                <span class="stat-label">
+                    LATENCY
+                </span>
+
+            </div>
+
+            <h3>
+                {{ ping_latency }}
+            </h3>
+
+            <p class="stat-description">
+                Round-trip response time
+            </p>
+
+        </div>
+
+    </div>
+
+</section> 
+
+
+        <!-- NETWORK ADAPTERS -->
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Network Adapters
+                    </h2>
+
+                    <p>
+                        Interfaces detected on this computer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity-card">
+
+                {% for adapter in adapters %}
+
+                <div class="activity-item">
+
+                    <div class="activity-icon blue">
+                        ⌁
+                    </div>
+
+                    <div class="activity-details">
+
+                        <strong>
+                            {{ adapter.name }}
+                        </strong>
+
+                        <span>
+                            IP: {{ adapter.ip }}
+                            | MAC: {{ adapter.mac }}
+                        </span>
+
+                    </div>
+
+                    <span class="activity-status">
+                        Detected
+                    </span>
+
+                </div>
+
+                {% else %}
+
+                <div class="activity-item">
+
+                    <div class="activity-details">
+
+                        <strong>
+                            No network adapters detected
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <p>
+                © 2026 AutoTech | IT Support Automation Toolkit
+            </p>
+
+            <p>
+                Network information collected locally.
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
