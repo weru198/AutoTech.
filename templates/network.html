@@ -161,9 +161,11 @@
                     Inspect network configuration and identify
                     connectivity information from this computer.
                 </p>
-                <a href="/run-network-diagnostics" class="action-link">
-                Run Full Diagnostics →
-                </a>
+                <form action="{{ url_for('generate_full_report') }}" method="POST">
+                    <button type="submit" class="action-link">
+                     Run Full Diagnostics →
+                    </button>
+                </form>
             </div>
 
             <div class="welcome-badge">
